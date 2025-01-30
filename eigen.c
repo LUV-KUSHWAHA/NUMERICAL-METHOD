@@ -1,14 +1,13 @@
-// PROGRAM TO FIND LARGEST EIGEN VALUES AND EIGEN VECTOR
+// PROGRAM TO FIND LARGEST EIGENVALUE AND EIGENVECTOR USING POWER METHOD
 #include <stdio.h>
 #include <math.h>
 
-int main() 
-{
+int main() {
     int i, j, n, count = 0;
-    float e = 0. 01, lambda_old = 1, lambda_new, x_new[50], x_old[50];
-    float a[50][50], temp;
+    float e = 0.01, lambda_old = 0, lambda_new, temp;
+    float a[50][50], x_new[50], x_old[50];
 
-    // Input for matrix order and tolerable error
+    // Input for matrix order
     printf("\nEnter the order n (dimension of matrix): ");
     scanf("%d", &n);
 
@@ -36,7 +35,7 @@ int main()
             }
         }
 
-        // Find the maximum value in x_new as the new eigenvalue (lambda_new)
+        // Find max absolute value in x_new as new eigenvalue
         lambda_new = fabs(x_new[0]);
         for (i = 1; i < n; i++) {
             if (fabs(x_new[i]) > lambda_new) {
@@ -44,7 +43,7 @@ int main()
             }
         }
 
-        // Normalize the new vector
+        // Normalize x_new
         for (i = 0; i < n; i++) {
             x_new[i] /= lambda_new;
         }
@@ -53,7 +52,7 @@ int main()
         temp = fabs(lambda_new - lambda_old);
         lambda_old = lambda_new;
 
-        // Update x_old with x_new for the next iteration
+        // Update x_old with x_new for next iteration
         for (i = 0; i < n; i++) {
             x_old[i] = x_new[i];
         }
@@ -61,7 +60,7 @@ int main()
         count++;
     } while (temp > e);
 
-    // Print the results
+    // Print results
     printf("\nThe dominant eigenvalue is: %f\n", lambda_new);
     printf("The corresponding eigenvector is:\n");
     for (i = 0; i < n; i++) {
